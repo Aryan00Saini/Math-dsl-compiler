@@ -1,61 +1,61 @@
-# Math DSL Compiler
+# Math-DSL Compiler
 
-A custom Domain Specific Language (DSL) compiler built in C. It parses mathematical equations and variable assignments, reconstructing them into an Abstract Syntax Tree (AST) that enforces mathematical order-of-operations (BEDMAS/PEMDAS). It also visually outputs the generated AST.
+A high-performance, handwritten Domain Specific Language (DSL) compiler developed in **Pure C**. This project implements a full compilation pipeline—from lexical analysis to AST visualization—without the use of third-party generators like Flex or Bison. It is specifically designed to handle mathematical expressions and variable assignments while strictly enforcing operator precedence.
 
-## Features
+## 🛠 Technical Features
 
-- **Lexical Analysis:** Custom lexer that converts raw source text into tokens, tracking exact line and column numbers for precise error reporting.
-- **Abstract Syntax Tree (AST):** Dynamically allocates a representation of expressions using union-based nodes for assignments, operations, variables, and numbers.
-- **Syntax Analysis:** A recursive descent parser that enforces rigorous operator precedence (multiplication/division evaluated before addition/subtraction).
-- **Panic-Mode Error Recovery:** Resilient parser that gracefully recovers from syntax errors to continue evaluating the remaining source text.
-- **AST Visualization:** Automatically generates a textual `.dot` file representation of the AST and calls Graphviz to compile it into a high-quality `.png` image.
+* **Handwritten Lexical Analyzer:** A custom state machine that tokenizes input and tracks precise line/column metadata for advanced error reporting.
+* **Recursive Descent Parser:** Manually implemented parsing logic to handle complex operator precedence (PEMDAS/BEDMAS) and nested parentheses.
+* **Dynamic AST Construction:** An Abstract Syntax Tree built using union-based nodes and manual memory management for high efficiency.
+* **Panic-Mode Error Recovery:** Resilient architecture that identifies syntax errors without halting the entire compilation process.
+* **Graphviz Integration:** Automated generation of `.dot` files and `.png` images to provide a visual representation of the compiler's internal logic.
 
-## Project Structure
+## 🏗 System Architecture
 
-- `src/main.c`: The compiler entry point tying everything together.
-- `src/lexer.c`: Lexical analyzer to tokenize the input.
-- `src/parser.c`: Recursive descent parser to build the AST.
-- `src/ast.c`: Definitions and memory management functionality for AST nodes.
-- `src/visualize.c`: AST walker that outputs Graphviz DOT structure.
-- `include/`: C header files for the implementation.
-- `project_report.md`: Detailed architecture report with insights into the logic and parsing strategies.
+The project follows a modular C architecture to ensure scalability and maintainability:
 
-## Prerequisites
+| Component | File | Description |
+| --- | --- | --- |
+| **Lexer** | `lexer.c` | Converts raw source text into a stream of tokens. |
+| **Parser** | `parser.c` | Performs syntax analysis and constructs the AST. |
+| **AST** | `ast.c` | Handles node allocation, tree traversal, and memory cleanup. |
+| **Visualizer** | `visualize.c` | Walks the AST to generate Graphviz-compatible output. |
+| **Driver** | `main.c` | The main entry point coordinating the compilation phases. |
 
-- **CMake** (3.15 or newer)
-- **C Compiler** supporting C99 standard
-- **Graphviz** (must be installed and added to the system `PATH` to allow dynamic `.png` generation)
+## 🚀 Getting Started
 
-## Building the Compiler
+### Prerequisites
 
-1. Create a `build` directory and run CMake:
-   ```bash
-   mkdir build
-   cd build
-   cmake ..
-   ```
-2. Build the executable:
-   ```bash
-   cmake --build .
-   ```
-   *(Or open the generated files in your preferred IDE/Make to compile).*
+* **C Compiler:** GCC or Clang (C11 support)
+* **Build System:** CMake 3.15+
+* **Visualization:** Graphviz (must be in system `PATH` for `.png` generation)
 
-## Running the Compiler
+### Build Instructions
 
-To use the compiler, pass the path of a source text file containing equations/assignments:
+```powershell
+# Create build directory
+mkdir build
+cd build
+
+# Generate build files and compile
+cmake ..
+cmake --build .
+
+```
+
+### Usage
+
+Run the compiler by passing a source file:
 
 ```bash
-./math_dsl <path_to_source_file.txt>
+./math_dsl tests/sample.mdsl
+
 ```
 
-Example source text:
-```
-let x = 10 + 5 * -2;
-```
+## 📊 Sample Output
 
-**Output:**
-1. Console will print `Successfully parsed...` and status updates.
-2. An `ast.dot` file will be generated in the current directory.
-3. If Graphviz is correctly installed, an `ast.png` file will be generated containing the visual tree.
+Input: `let x = 10 + 5 * 2;`
 
-**Note:** If the `dot` command fails, please ensure that Graphviz is properly installed and its `bin` directory is added to your system's `PATH` variable.
+The compiler generates an **`ast.png`** representing the prioritized operations:
+
+---
