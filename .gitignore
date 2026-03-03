@@ -1,0 +1,11 @@
+# Build directory
+build/
+bin/
+*.exe
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
