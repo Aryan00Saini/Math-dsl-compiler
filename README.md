@@ -56,6 +56,6 @@ Run the compiler by passing a source file:
 
 Input: `let x = 10 + 5 * 2;`
 
-The compiler generates an **`ast.png`** representing the prioritized operations:
+The compiler generates an **`ast.png`** representing the prioritized operations:-
 
 ---
