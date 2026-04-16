@@ -205,6 +205,25 @@ winget install Graphviz.Graphviz
 
 ---
 
+### Installing Prerequisites on macOS
+
+**Xcode Command Line Tools** (provides `clang++`):
+```bash
+xcode-select --install
+```
+
+**CMake + Graphviz via Homebrew:**
+```bash
+brew install cmake graphviz
+```
+
+**SDL2 (required only for GUI build):**
+```bash
+brew install sdl2
+```
+
+---
+
 ## 🚀 Building the Project
 
 ### Step 1 — Clone the Repository
