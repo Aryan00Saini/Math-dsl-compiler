@@ -10,6 +10,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 static std::string readFile(const std::string& path) {
   std::ifstream file(path, std::ios::binary);
@@ -23,6 +26,11 @@ static std::string readFile(const std::string& path) {
 }
 
 int main(int argc, const char* argv[]) {
+#ifdef _WIN32
+  // Enable UTF-8 output on Windows console
+  SetConsoleOutputCP(CP_UTF8);
+#endif
+
   if (argc != 2) {
     std::cerr << "Usage: math_dsl <path-to-source.dsl>\n";
     return 64;
@@ -40,7 +48,7 @@ int main(int argc, const char* argv[]) {
     std::cerr << "\nParsing failed with " << parser.errors().size() << " error(s).\n";
     return 65;
   }
-  std::cout << "✓ Parse OK\n";
+  std::cout << "[OK] Parse OK\n";
 
   // ── 2. Semantic Analysis ─────────────────────────────────────────────────
   SemanticAnalyzer analyzer;
@@ -51,12 +59,12 @@ int main(int argc, const char* argv[]) {
               << analyzer.errors().size() << " error(s).\n";
     // Still visualize the AST so the user can inspect the tree
   } else {
-    std::cout << "✓ Semantic analysis OK\n";
+    std::cout << "[OK] Semantic analysis OK\n";
   }
 
   // ── 3. AST Visualization ─────────────────────────────────────────────────
   visualizeAST(*root, "ast.dot");
-  std::cout << "✓ Generated 'ast.dot'\n";
+  std::cout << "[OK] Generated 'ast.dot'\n";
 
 #ifdef _WIN32
   int dotRet = std::system("dot -Tpng ast.dot -o ast.png 2>nul");
@@ -64,16 +72,16 @@ int main(int argc, const char* argv[]) {
   int dotRet = std::system("dot -Tpng ast.dot -o ast.png 2>/dev/null");
 #endif
   if (dotRet == 0)
-    std::cout << "✓ Generated 'ast.png'\n";
+    std::cout << "[OK] Generated 'ast.png'\n";
   else
-    std::cout << "  (Graphviz not found — open ast.dot manually)\n";
+    std::cout << "  (Graphviz not found - open ast.dot manually)\n";
 
   if (!semOk) return 66;
 
   // ── 4. IR Generation ─────────────────────────────────────────────────────
   IRGen irGen;
   IRProgram ir = irGen.generate(*root);
-  std::cout << "✓ IR generated (" << ir.size() << " instructions)\n";
+  std::cout << "[OK] IR generated (" << ir.size() << " instructions)\n";
 
   // ── 5. Optimization Passes ───────────────────────────────────────────────
   size_t before = ir.size();
@@ -82,7 +90,7 @@ int main(int argc, const char* argv[]) {
   deadCodeEliminationPass(ir);
   size_t after = ir.size();
 
-  std::cout << "✓ Optimized: " << before << " → " << after << " instructions";
+  std::cout << "[OK] Optimized: " << before << " -> " << after << " instructions";
   if (after < before)
     std::cout << "  (" << (before - after) << " eliminated)";
   std::cout << "\n";
