@@ -1,11 +1,30 @@
-# Build directory
+# Build artifacts
 build/
-bin/
+*.o
+*.a
 *.exe
+*.out
+*.dll
+*.so
+*.dylib
 
-# VS Code
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# VS Code settings (optional: remove if you want to share settings)
 .vscode/
 
-# OS generated files
+# Cache
+.cache/
+
+# Generated graph files
+*.dot
+*.png
+
+# OS files
 .DS_Store
 Thumbs.db

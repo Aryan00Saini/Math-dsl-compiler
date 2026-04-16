@@ -1,16 +1,29 @@
-cmake_minimum_required(VERSION 3.15)
-project(MathDSL C)
+cmake_minimum_required(VERSION 3.16)
+project(MathDSL CXX)
 
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(include)
+# ── Build options ─────────────────────────────────────────────────────────────
+option(BUILD_CLI   "Build the command-line compiler tool" ON)
+option(BUILD_GUI   "Build the ImGui IDE frontend"         ON)
+option(BUILD_TESTS "Build tests"                          OFF)
 
-# Executable containing all source files
-add_executable(math_dsl
-    src/main.c
-    src/lexer.c
-    src/parser.c
-    src/ast.c
-    src/visualize.c
-)
+# ── Compiler core (static library) ───────────────────────────────────────────
+add_subdirectory(compiler)
+
+# ── CLI frontend ──────────────────────────────────────────────────────────────
+if(BUILD_CLI)
+    add_subdirectory(cli)
+endif()
+
+# ── GUI IDE frontend ──────────────────────────────────────────────────────────
+if(BUILD_GUI)
+    add_subdirectory(gui)
+endif()
+
+# ── Tests ─────────────────────────────────────────────────────────────────────
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
