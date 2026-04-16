@@ -256,7 +256,7 @@ cmake --build build --config Release
 
 The compiled binaries will be in:
 - **CLI:** `build/cli/math_dsl` (or `math_dsl.exe` on Windows)
-- **GUI:** `build/gui/math_dsl_gui` (or `math_dsl_gui.exe` on Windows)
+- **GUI:** `build/gui/math_ide` (or `math_ide.exe` on Windows)
 
 ---
 
@@ -277,12 +277,12 @@ The compiled binaries will be in:
 
 **Expected output:**
 ```
-✓ Parse OK
-✓ Semantic analysis OK
-✓ Generated 'ast.dot'
-✓ Generated 'ast.png'        ← only if Graphviz is installed
-✓ IR generated (42 instructions)
-✓ Optimized: 42 → 38 instructions  (4 eliminated)
+[OK] Parse OK
+[OK] Semantic analysis OK
+[OK] Generated 'ast.dot'
+[OK] Generated 'ast.png'        <- only if Graphviz is installed
+[OK] IR generated (37 instructions)
+[OK] Optimized: 37 -> 37 instructions
 [IR output printed here...]
 ```
 
@@ -302,10 +302,10 @@ The compiled binaries will be in:
 
 ```bash
 # Linux / macOS
-./build/gui/math_dsl_gui
+./build/gui/math_ide
 
-# Windows
-.\build\gui\Release\math_dsl_gui.exe
+# Windows (PowerShell)
+.\build\gui\math_ide.exe
 ```
 
 The GUI provides:
