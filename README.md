@@ -346,13 +346,6 @@ Even on error, the AST is still visualized so you can inspect the parse tree.
 
 ---
 
-## 👤 Author
-
-**Aryan Saini**
-- GitHub: [@Aryan00Saini](https://github.com/Aryan00Saini)
-- Repository: [Math-dsl-compiler](https://github.com/Aryan00Saini/Math-dsl-compiler)
-
----
 
 ## 📜 License
 
