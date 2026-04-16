@@ -58,7 +58,11 @@ int main(int argc, const char* argv[]) {
   visualizeAST(*root, "ast.dot");
   std::cout << "✓ Generated 'ast.dot'\n";
 
+#ifdef _WIN32
   int dotRet = std::system("dot -Tpng ast.dot -o ast.png 2>nul");
+#else
+  int dotRet = std::system("dot -Tpng ast.dot -o ast.png 2>/dev/null");
+#endif
   if (dotRet == 0)
     std::cout << "✓ Generated 'ast.png'\n";
   else
