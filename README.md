@@ -356,6 +356,3 @@ Even on error, the AST is still visualized so you can inspect the parse tree.
 ---
 
 
-## 📜 License
-
-This project is open-source. Feel free to use and modify it for educational purposes.
